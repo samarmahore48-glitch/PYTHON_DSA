@@ -1,20 +1,12 @@
 class Solution:
     def productExceptSelf(self, nums: list[int]) -> list[int]:
-        total=1
-        if 0 not in nums:
-            total=1
-            for j in nums:
-                total*=j
-            result = list(map(lambda x: int(total / x), nums))
-            return result
-
-
-        ans=[0]*len(nums)
+        prefix=[1]*len(nums)
+        suffix=[1]*len(nums)
+        ans=[1]*len(nums)
+        for i in range(1,len(nums)):
+            prefix[i]=prefix[i-1]*nums[i-1]
+        for i in range(len(nums)-2,-1,-1):
+            suffix[i]=suffix[i+1]*nums[i+1]
         for i in range(0,len(nums)):
-            total=1
-            new_arr=nums[:i]+nums[i+1:]
-            for j in new_arr:
-                total*=j
-            ans[i]=total
+            ans[i]=prefix[i]*suffix[i] 
         return ans
-        
