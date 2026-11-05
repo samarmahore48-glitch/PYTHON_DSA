@@ -5,21 +5,12 @@ class Solution:
 
         intervals.sort(key=lambda x: x[0])
 
-        i = 1
+        res = [intervals[0]]
 
-        while i < len(intervals):
-            if intervals[i-1] != 0 and intervals[i] != 0:
-                if intervals[i-1][1] >= intervals[i][0]:
+        for i in range(1, len(intervals)):
+            if res[-1][1] >= intervals[i][0]:
+                res[-1][1] = max(res[-1][1], intervals[i][1])
+            else:
+                res.append(intervals[i])
 
-                    a = [
-                        min(intervals[i-1][0], intervals[i][0]),
-                        max(intervals[i-1][1], intervals[i][1])
-                    ]
-
-                    intervals[i] = a
-                    intervals[i-1] = 0
-
-            i += 1
-
-        res = list(filter(lambda x: x != 0, intervals))
         return res
